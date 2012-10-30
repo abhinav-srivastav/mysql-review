@@ -63,14 +63,14 @@ select shape,sum(side1 * side1) as area from blocks group by shape;
 
 
 //4
-select color,((side1 * side1) * qty) as area from blocks left join block_qty on block_id = blocks.id having area > 300 order by color;
+select color,((side1 * side1) * qty) as area from blocks join block_qty on block_id = blocks.id having area > 300 order by color;
 +--------+------+
 | color  | area |
 +--------+------+
 | green  |  800 |
 | yellow |  320 |
 +--------+------+
-2 rows in set (0.01 sec)
+2 rows in set (0.00 sec)
 
 
 
@@ -86,7 +86,32 @@ select color,((side1 * side1) * qty) as area from blocks left join block_qty on 
 
 
 
-select shape,color, (     if (shape = 'rectangle'){side1 * side2 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+select shape,color, ( if (shape = 'rectangle'){side1 * side2 }
 else if(shape = 'square'){side1 * side1}
-else if (shape = 'circle'){3.14 * side1* side1} 	
-from bloc
+else if (shape = 'circle'){3.14 * side1* side1}
+from blocks;
+
+
+
+
+
+
+
+
+
+
+
+

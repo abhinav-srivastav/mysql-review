@@ -1,0 +1,117 @@
+//1
+select shape,color,(side1 * side1) as area from blocks;
++-----------+--------+------+
+| shape     | color  | area |
++-----------+--------+------+
+| triangle  | red    |   25 |
+| square    | red    |   25 |
+| rectangle | red    |    4 |
+| circle    | red    |   25 |
+| circle    | blue   |    4 |
+| square    | blue   |   49 |
+| square    | yellow |   64 |
+| triangle  | yellow |    4 |
+| triangle  | blue   |    9 |
+| circle    | green  |  100 |
+| square    | green  |    1 |
+| square    | cyan   |   16 |
+| rectangle | cyan   |   49 |
+| rectangle | yellow |   25 |
+| rectangle | white  |    4 |
+| circle    | white  |   16 |
++-----------+--------+------+
+16 rows in set (0.00 sec)
+
+
+//2
+select shape,sum(side1 * side1) as area from blocks group by shape;
++-----------+------+
+| shape     | area |
++-----------+------+
+| circle    |  145 |
+| rectangle |   82 |
+| square    |  155 |
+| triangle  |   38 |
++-----------+------+
+4 rows in set (0.00 sec)
+
+//3
+
+ select shape,color,((side1 * side1) * qty) as area from blocks left join block_qty on block_id = blocks.id;
++-----------+--------+------+
+| shape     | color  | area |
++-----------+--------+------+
+| triangle  | red    |  175 |
+| square    | red    |  125 |
+| rectangle | red    |   12 |
+| circle    | red    |   50 |
+| circle    | blue   |    0 |
+| square    | blue   |  245 |
+| square    | yellow |  320 |
+| triangle  | yellow |   32 |
+| triangle  | blue   |   36 |
+| circle    | green  |  800 |
+| square    | green  |    8 |
+| square    | cyan   |   96 |
+| rectangle | cyan   |  294 |
+| rectangle | yellow |   25 |
+| rectangle | white  |   28 |
+| circle    | white  | NULL |
++-----------+--------+------+
+16 rows in set (0.00 sec)
+
+
+
+//4
+select color,((side1 * side1) * qty) as area from blocks join block_qty on block_id = blocks.id having area > 300 order by color;
++--------+------+
+| color  | area |
++--------+------+
+| green  |  800 |
+| yellow |  320 |
++--------+------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select shape,color, ( if (shape = 'rectangle'){side1 * side2 }
+else if(shape = 'square'){side1 * side1}
+else if (shape = 'circle'){3.14 * side1* side1}
+from blocks;
+
+
+
+
+
+
+
+
+
+
+
+
