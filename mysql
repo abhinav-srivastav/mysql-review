@@ -1,8 +1,8 @@
 //1
  select shape,color, case shape 
-    when 'rectangle' THEN side1*side2
-     when 'circle' THEN PI()*side1*side1 
-    when 'triangle' THEN sqrt(3)/4*side1*side1
+    when 'rectangle' then side1*side2
+     when 'circle' then PI()*side1*side1 
+    when 'triangle' then sqrt(3)/4*side1*side1
     else side1*side1 
     end
     as area from blocks order by id;
@@ -32,9 +32,9 @@
 
 //2
 select shape,sum(case shape 
-  when 'rectangle' THEN side1*side2
-  when 'circle' THEN PI()*side1*side1 
-  when 'triangle' THEN SQRT(3)/4*side1*side1
+  when 'rectangle' then side1*side2
+  when 'circle' then PI()*side1*side1 
+  when 'triangle' then SQRT(3)/4*side1*side1
   else side1*side1 
   end) as area from blocks group by shape;
 +-----------+-------------------+

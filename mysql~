@@ -117,19 +117,4 @@ from blocks join block_qty on block_id = blocks.id group by  color having area >
 
 
 
- select shape,color, case shape 
-when 'triangle' THEN side1*side2
- when 'circle' THEN 3.14*side1*side1 
-when 'triangle' THEN 1.732/4*side1*side1
-else side1*side1 
-end
- as area from blocks order by id;
-
-
-
-
-
-
-
-
 
