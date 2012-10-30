@@ -1,82 +1,85 @@
 //1
- select shape,color, case shape 
-    when 'rectangle' THEN side1*side2
-     when 'circle' THEN PI()*side1*side1 
-    when 'triangle' THEN sqrt(3)/4*side1*side1
-    else side1*side1 
-    end
-    as area from blocks order by id;
-+-----------+--------+--------+
-| shape     | color  | area   |
-+-----------+--------+--------+
-| triangle  | red    |     25 |
-| square    | red    |     25 |
-| rectangle | red    |      4 |
-| circle    | red    |  78.50 |
-| circle    | blue   |  12.56 |
-| square    | blue   |     49 |
-| square    | yellow |     64 |
-| triangle  | yellow |      4 |
-| triangle  | blue   |      0 |
-| circle    | green  | 314.00 |
-| square    | green  |      1 |
-| square    | cyan   |     16 |
-| rectangle | cyan   |     49 |
-| rectangle | yellow |     25 |
-| rectangle | white  |      4 |
-| circle    | white  |  50.24 |
-+-----------+--------+--------+
+ select shape,color,round( case shape 
+    ->     when 'rectangle' then side1*side2
+    ->      when 'circle' then PI()*side1*side1 
+    ->     when 'triangle' then sqrt(3)/4*side1*side1
+    ->     else side1*side1 
+    ->     end,3)
+    ->     as area from blocks order by id;
++-----------+--------+---------+
+| shape     | color  | area    |
++-----------+--------+---------+
+| triangle  | red    |  10.825 |
+| square    | red    |  25.000 |
+| rectangle | red    |   8.000 |
+| circle    | red    |  78.540 |
+| circle    | blue   |  12.566 |
+| square    | blue   |  49.000 |
+| square    | yellow |  64.000 |
+| triangle  | yellow |   1.732 |
+| triangle  | blue   |   3.897 |
+| circle    | green  | 314.159 |
+| square    | green  |   1.000 |
+| square    | cyan   |  16.000 |
+| rectangle | cyan   |  56.000 |
+| rectangle | yellow |  10.000 |
+| rectangle | white  |  20.000 |
+| circle    | white  |  50.265 |
++-----------+--------+---------+
 16 rows in set (0.00 sec)
+
 
 
 
 //2
-select shape,sum(case shape 
-  when 'rectangle' THEN side1*side2
-  when 'circle' THEN PI()*side1*side1 
-  when 'triangle' THEN SQRT(3)/4*side1*side1
-  else side1*side1 
-  end) as area from blocks group by shape;
-+-----------+-------------------+
-| shape     | area              |
-+-----------+-------------------+
-| circle    |   455.53093477052 |
-| rectangle |                94 |
-| square    |               155 |
-| triangle  | 16.45448267190433 |
-+-----------+-------------------+
+ select shape,round(sum(case shape 
+    ->   when 'rectangle' then side1*side2
+    ->   when 'circle' then PI()*side1*side1 
+    ->   when 'triangle' then SQRT(3)/4*side1*side1
+    ->   else side1*side1 
+    ->   end),3) as area from blocks group by shape;
++-----------+---------+
+| shape     | area    |
++-----------+---------+
+| circle    | 455.531 |
+| rectangle |  94.000 |
+| square    | 155.000 |
+| triangle  |  16.454 |
++-----------+---------+
 4 rows in set (0.00 sec)
+
 
 
 //3
 
- select shape,color,((case shape 
-  when 'rectangle' then side1*side2
-  when 'circle' then PI()*side1*side1 
-  when 'triangle' then SQRT(3)/4*side1*side1
-  else side1*side1 
-  end) * qty) as area from blocks left join block_qty on block_id = blocks.id;
-+-----------+--------+--------------------+
-| shape     | color  | area               |
-+-----------+--------+--------------------+
-| triangle  | red    |  75.77722283113837 |
-| square    | red    |                125 |
-| rectangle | red    |                 24 |
-| circle    | red    | 157.07963267948966 |
-| circle    | blue   |                  0 |
-| square    | blue   |                245 |
-| square    | yellow |                320 |
-| triangle  | yellow | 13.856406460551018 |
-| triangle  | blue   | 15.588457268119896 |
-| circle    | green  | 2513.2741228718346 |
-| square    | green  |                  8 |
-| square    | cyan   |                 96 |
-| rectangle | cyan   |                336 |
-| rectangle | yellow |                 10 |
-| rectangle | white  |                140 |
-| circle    | white  |               NULL |
-+-----------+--------+--------------------+
+  select shape,color,round((case shape 
+    ->   when 'rectangle' then side1*side2
+    ->   when 'circle' then PI()*side1*side1 
+    ->   when 'triangle' then SQRT(3)/4*side1*side1
+    ->   else side1*side1 
+    ->   end) * qty,3) as area from blocks left join block_qty on block_id = blocks.id;
++-----------+--------+----------+
+| shape     | color  | area     |
++-----------+--------+----------+
+| triangle  | red    |   75.777 |
+| square    | red    |  125.000 |
+| rectangle | red    |   24.000 |
+| circle    | red    |  157.080 |
+| circle    | blue   |    0.000 |
+| square    | blue   |  245.000 |
+| square    | yellow |  320.000 |
+| triangle  | yellow |   13.856 |
+| triangle  | blue   |   15.588 |
+| circle    | green  | 2513.274 |
+| square    | green  |    8.000 |
+| square    | cyan   |   96.000 |
+| rectangle | cyan   |  336.000 |
+| rectangle | yellow |   10.000 |
+| rectangle | white  |  140.000 |
+| circle    | white  |     NULL |
++-----------+--------+----------+
 16 rows in set (0.00 sec)
+
 
 
 
